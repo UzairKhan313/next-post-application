@@ -8,8 +8,10 @@ export default function Header() {
       <Link href="/">
         <Image
           src={logo}
-          width={100}
-          height={100}
+          width={100} // Not Recomended.
+          height={100} // Not Recomended.
+          sizes="10vw" // Recomended way
+          priority
           alt="Mobile phone with posts feed on it"
         />
       </Link>

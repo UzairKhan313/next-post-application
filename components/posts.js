@@ -1,22 +1,40 @@
 "use client";
 import { formatDate } from "@/lib/format";
 import { useOptimistic } from "react";
+import Image from "next/image";
 
 import LikeButton from "./like-icon";
 import { togglePostLikeStatus } from "@/actions/posts";
 
 function Post({ post, action }) {
+  // Otimizing dynamic images.
+  const imageLoader = (config) => {
+    const startUrl = config.src.split("upload/")[0];
+    const endUrl = config.src.split("upload/")[1];
+    const trasformation = `w_200,q_${config.quality}`;
+    return `${startUrl}upload/${trasformation}/${endUrl}`;
+  };
+
   return (
     <article className="post">
       <div className="post-image">
-        <img src={post.image} alt={post.title} />
+        <Image
+          loader={imageLoader}
+          src={post.image}
+          alt={post.title}
+          // fill
+          // sizes=""
+          width={200}
+          height={120} // Height and width not much important becouse we already mention it on dynamic url.
+          quality={50}
+        />
       </div>
       <div className="post-content">
         <header>
           <div>
             <h2>{post.title}</h2>
             <p>
-              Shared by {post.userFirstName} on{" "}
+              Shared by {post.userFirstName} on
               <time dateTime={post.createdAt}>
                 {formatDate(post.createdAt)}
               </time>
